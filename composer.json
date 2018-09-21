@@ -1,0 +1,17 @@
+{
+    "name": "xy2z/lite-config",
+    "description": "A lightweight PHP static class with zero dependencies.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "xy2z",
+            "email": "xy2z@pm.me"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "xy2z\\LiteConfig\\": "src/"
+        }
+    }
+}
