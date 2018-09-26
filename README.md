@@ -46,13 +46,13 @@ echo Config::get('settings.app_name'); # key is 'filename.key'
 
 #### Single file
 ```php
-# Without prefix
+# No key prefix
 Config::loadFile('config/settings.php');
 echo Config::get('key');
 
-# With prefix
-Config::loadFile('config/db.ini', 'prefix');
-echo Config::get('prefix.key');
+# Prefix filename to key
+Config::loadFile('config/db.ini', true);
+echo Config::get('db.key');
 ```
 
 
