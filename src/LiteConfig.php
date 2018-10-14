@@ -136,8 +136,8 @@ abstract class LiteConfig {
 	 *
 	 * @return mixed Value
 	 */
-	public static function get(string $key) {
-		return static::$data[$key] ?? null;
+	public static function get(string $key, $default) {
+		return static::$data[$key] ?? $default ?? null;
 	}
 
 	/**
