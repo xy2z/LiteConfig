@@ -132,6 +132,7 @@ abstract class LiteConfig {
      * Get by key
      *
      * @param string $key Key
+     * @param mixed $default default value
      *
      * @return mixed Value
      */
