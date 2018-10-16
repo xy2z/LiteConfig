@@ -7,10 +7,9 @@ use xy2z\Liteconfig\LiteConfig as Config;
 
 $start = microtime(true);
 
-
 # PHP array
 // Config::loadArray([
-// 	'app_name' => 'Example',
+//     'app_name' => 'Example',
 // ]);
 
 # LoadFile
@@ -28,23 +27,23 @@ $start = microtime(true);
 # INI
 // Config::loadArray(parse_ini_file('conf.ini', true));
 
-
 Config::loadArray([
-  'version' => 1.5,
-  'app' => [
-      'name' => 'Example'
-  ]
+    'version' => 1.5,
+    'app' => [
+        'name' => 'Example',
+    ],
 ]);
 
 var_dump(Config::get('version')); # 1.0
 var_dump(Config::get('app')); # Array('name' => 'Example')
 var_dump(Config::get('app.name')); # Example
-
+var_dump(Config::get('app.name', 'Default name')); # Example
+var_dump(Config::get('app.internalID', 1)); # 1
 
 # RESULT
 echo PHP_EOL . '------------' . PHP_EOL;
 var_dump(
-	Config::get('conf.app_name')
+    Config::get('conf.app_name')
 );
 
 echo PHP_EOL;

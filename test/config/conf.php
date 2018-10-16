@@ -2,6 +2,6 @@
 
 return [
 
-	'app_name' => 'phpFileLOL',
+    'app_name' => 'phpFileLOL',
 
 ];
