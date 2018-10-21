@@ -29,7 +29,8 @@ Config::loadArray([
 
 echo Config::get('version'); # 1.0
 echo Config::get('app'); # Array('name' => 'Example')
-echo Config::get('app.name'); # Example
+echo Config::get('app.name', 'default name'); # Example
+echo Config::get('app.type', 'Desktop'); # Desktop
 ```
 
 #### Directory
@@ -57,7 +58,7 @@ echo Config::get('db.key');
 
 
 ## Methods
-- `get(string $key)` Get value of key.
+- `get(string $key, $default = null)` Get value of key.
 - `all()` Returns a complete array.
 - `exists(string $key)` Does key exist?
 - `loadDir(string $path, bool $prefix_filename = false, string $prefix = null)` Loads all files in dir.
