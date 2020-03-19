@@ -63,6 +63,10 @@ echo Config::get('db.key');
 ```
 
 #### YAML
+```bash
+composer require symfony/yaml
+```
+
 ```php
 use xy2z\LiteConfig\LiteConfig as Config;
 use Symfony\Component\Yaml\Yaml;
