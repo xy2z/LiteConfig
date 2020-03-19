@@ -13,5 +13,13 @@
         "psr-4": {
             "xy2z\\LiteConfig\\": "src/"
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.1"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "xy2z\\LiteConfigTests\\": "tests/"
+        }
     }
 }

@@ -6,10 +6,16 @@ Supports multiple configs and multidimensional arrays.
 
 Built-in support for PHP, INI and JSON files.
 
+Supports YAML and anything else you can parse to an array, see below.
+
 
 ## Requirements
 - PHP 7.0 +
 
+## Install
+```bash
+composer require xy2z/lite-config
+```
 
 ## Examples
 
@@ -54,6 +60,16 @@ echo Config::get('key');
 # Prefix filename to key
 Config::loadFile('config/db.ini', true);
 echo Config::get('db.key');
+```
+
+#### YAML
+```php
+use xy2z\LiteConfig\LiteConfig as Config;
+use Symfony\Component\Yaml\Yaml;
+
+Config::loadArray(Yaml::parseFile(__DIR__ . '/config/file.yml'));
+
+echo Config::get('key');
 ```
 
 
