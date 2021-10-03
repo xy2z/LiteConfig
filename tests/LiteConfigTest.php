@@ -1,5 +1,8 @@
 <?php
 
+// This should be called using "phpunit" command.
+
+
 namespace xy2z\LiteConfigTests;
 
 use PHPUnit\Framework\TestCase;

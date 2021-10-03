@@ -87,6 +87,18 @@ abstract class LiteConfig {
 
             case 'json':
                 return json_decode(file_get_contents($path), true);
+
+            default:
+                // Allow custom handler for other filename extensions.
+                $custom_handler = call_user_func_array(array(get_called_class(), 'custom_handler'), array(
+                    'extension' => $pathinfo['extension'],
+                    'path' => $path,
+                ));
+
+                // Only return if success, otherwise it will throw exception at end of this method.
+                if (($custom_handler !== null) && ($custom_handler !== false)) {
+                    return $custom_handler;
+                }
         }
 
         throw new \Exception('Unsupported filetype: ' . $pathinfo['extension']);
@@ -159,5 +171,16 @@ abstract class LiteConfig {
      */
     public static function exists(string $key): bool {
         return isset(self::$data[$key]);
+    }
+
+    /**
+     * This is a placeholder for child classes.
+     * To make sure they follow the "interface" of this function (protected, arguments, etc.)
+     *
+     * @param string $extension File extension (eg. "php")
+     * @param string $path Full file path
+     */
+    protected static function custom_handler(string $extension, string $path) {
+        return false;
     }
 }

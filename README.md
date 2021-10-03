@@ -63,6 +63,8 @@ echo Config::get('db.key');
 ```
 
 #### YAML
+To load a single file as YAML see below. If you need to use `loadDir()` with yaml (or other) files, then read about "Custom Handler" below.
+
 ```bash
 composer require symfony/yaml
 ```
@@ -76,8 +78,35 @@ Config::loadArray(Yaml::parseFile(__DIR__ . '/config/file.yml'));
 echo Config::get('key');
 ```
 
+#### Custom Handler
+A custom handler can be used for file extensions other than the built in (.php, .json and .ini). This will automatically work when using the `loadFile()` and `loadDir()` functions.
 
-## Methods
+Here's how you use the static `custom_handler()` function if you want YAML support.
+
+```php
+use xy2z\LiteConfig\LiteConfig;
+use Symfony\Component\Yaml\Yaml;
+
+class CustomLiteConfig extends LiteConfig {
+
+    protected static function custom_handler(string $extension, string $path) {
+        if (($extension === 'yml') || ($extension === 'yaml')) {
+            return Yaml::parseFile($path);
+        }
+
+        // Handle other extensions here...
+    }
+
+}
+
+CustomLiteConfig::loadDir(__DIR__ . '/config', true);
+var_dump(CustomLiteConfig::all());
+```
+
+If you want to modify the existing handling of all files, you can overwrite the complete `getFileContent()` function in your child class, which is used by `loadDir()` and `loadFile()`.
+
+
+## Public Methods
 - `get(string $key, $default = null)` Get value of key.
 - `all()` Returns a complete array.
 - `exists(string $key)` Does key exist?
