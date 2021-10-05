@@ -81,9 +81,7 @@ abstract class LiteConfig {
         switch ($pathinfo['extension']) {
             case 'php':
                 $res = require $path;
-                // avoid empty files
-                $res = ($res === 1) ? [] : $res;
-                return $res;
+                return is_array($res) ? $res : [];
 
             case 'ini':
                 return parse_ini_file($path, static::$ini_process_sections, static::$ini_scanner_mode);
