@@ -80,13 +80,16 @@ abstract class LiteConfig {
     protected static function getFileContent(string $path, array $pathinfo) {
         switch ($pathinfo['extension']) {
             case 'php':
-                return require $path;
+                $res = require $path;
+                // avoid empty files
+                $res = ($res === 1) ? [] : $res;
+                return $res;
 
             case 'ini':
                 return parse_ini_file($path, static::$ini_process_sections, static::$ini_scanner_mode);
 
             case 'json':
-                return json_decode(file_get_contents($path), true);
+                return json_decode(file_get_contents($path), true) ?? [];
 
             default:
                 // Allow custom handler for other filename extensions.
