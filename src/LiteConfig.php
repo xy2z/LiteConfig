@@ -64,8 +64,16 @@ abstract class LiteConfig {
             $prefix = $custom_prefix . '.' . $prefix;
         }
 
-        // Load file content
-        $content = static::getFileContent($path, $pathinfo);
+        $content = [];
+        try {
+            // Load file content
+            $content = static::getFileContent($path, $pathinfo);
+        } catch (\Throwable $th) {
+            //
+        }
+
+        $content = is_array($content) ? $content : [];
+
         static::loadArray($content, $prefix);
     }
 
