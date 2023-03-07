@@ -157,8 +157,7 @@ abstract class LiteConfig {
      *
      * @return array
      */
-    public static function all(): array
-    {
+    public static function all(): array {
         return static::$data;
     }
 
@@ -182,5 +181,15 @@ abstract class LiteConfig {
      */
     protected static function custom_handler(string $extension, string $path) {
         return false;
+    }
+
+    /**
+     * Resets (clears) $data array.
+     * So it can be loaded again without having old config keys.
+     *
+     * @return void
+     */
+    public static function resetData() {
+        static::$data = [];
     }
 }

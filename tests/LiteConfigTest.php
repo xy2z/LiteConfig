@@ -40,6 +40,15 @@ class LiteConfigTest extends TestCase {
 
 		// Doesn't exist
 		$this->assertFalse(LiteConfig::exists('undefined'));
+
+
+		// =======================================================
+		// Last:
+		// =======================================================
+		// Reset data
+		$this->assertNotEmpty(LiteConfig::all());
+		LiteConfig::resetData();
+		$this->assertEmpty(LiteConfig::all());
 	}
 
 }
