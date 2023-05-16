@@ -30,6 +30,11 @@ abstract class LiteConfig {
     public static $ini_scanner_mode = INI_SCANNER_TYPED;
 
     /**
+     * If set to true, it will throw an exception when loading unsupported filetypes.
+     */
+    public static $ignore_unsupported_filestypes = true;
+
+    /**
      * Loads all config files in a directory.
      *
      * @param string $path Path to dir
@@ -101,7 +106,10 @@ abstract class LiteConfig {
                 }
         }
 
-        throw new \Exception('Unsupported filetype: ' . $pathinfo['extension']);
+        if (!self::$ignore_unsupported_filestypes) {
+            throw new \Exception('Unsupported filetype: ' . $pathinfo['extension']);
+        }
+        return [];
     }
 
     /**
