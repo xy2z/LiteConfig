@@ -4,9 +4,7 @@ A lightweight PHP static class with zero dependencies.
 
 Supports multiple configs and multidimensional arrays.
 
-Built-in support for PHP, INI and JSON files.
-
-Supports YAML and anything else you can parse to an array, see below.
+Built-in support for PHP, INI and JSON files. Also supports YAML and anything else you can parse to an array, see [custom_handler()](#custom-handler) below.
 
 
 ## Requirements
