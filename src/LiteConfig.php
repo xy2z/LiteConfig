@@ -143,11 +143,7 @@ abstract class LiteConfig {
 	 */
 	public static function loadArray(array $data, string $prefix = null) {
 		foreach ($data as $key => $val) {
-			if (!is_null($prefix)) {
-				$key = $prefix . '.' . $key;
-			}
-
-			static::add($key, $val);
+			static::add($key, $val, $prefix);
 		}
 	}
 
@@ -157,16 +153,20 @@ abstract class LiteConfig {
 	 * @param string $key Key name
 	 * @param mixed $value Value
 	 */
-	protected static function add(string $key, $value) {
+	protected static function add(string $key, $value, string $prefix = null): void {
 		if (is_array($value)) {
 			foreach ($value as $k2 => $v2) {
 				$key_path = $key . '.' . $k2;
-				static::add($key_path, $v2);
+				static::add($key_path, $v2, $prefix);
 			}
 		}
 
-		// Set.
-		static::$data[$key] = $value;
+		// Save.
+		if (!is_null($prefix)) {
+			static::$data[$prefix][$key] = $value;
+		} else {
+			static::$data[$key] = $value;
+		}
 	}
 
 	/**
@@ -178,7 +178,21 @@ abstract class LiteConfig {
 	 * @return mixed Value
 	 */
 	public static function get(string $key, $default = null) {
-		return static::$data[$key] ?? $default;
+		if (strpos($key, '.') === false) {
+			return static::$data[$key] ?? $default;
+		}
+
+		// Key contains dot, so it's a nested key.
+		// Check if the first part exists.
+		$parts = explode('.', $key);
+		$prefix = array_shift($parts);
+		if (!isset(static::$data[$prefix])) {
+			return $default; // not found. return default.
+		}
+
+		// Check if the rest exists.
+		$rest = implode('.', $parts);
+		return static::$data[$prefix][$rest] ?? $default;
 	}
 
 	/**
@@ -198,7 +212,21 @@ abstract class LiteConfig {
 	 * @return bool
 	 */
 	public static function exists(string $key): bool {
-		return isset(self::$data[$key]);
+		if (strpos($key, '.') === false) {
+			return isset(static::$data[$key]);
+		}
+
+		// Key contains dot, so it's a nested key.
+		// Check if the first part exists.
+		$parts = explode('.', $key);
+		$prefix = array_shift($parts);
+		if (!isset(static::$data[$prefix])) {
+			return false;
+		}
+
+		// Check if the rest exists.
+		$rest = implode('.', $parts);
+		return isset(static::$data[$prefix][$rest]);
 	}
 
 	/**
