@@ -22,5 +22,15 @@
         "psr-4": {
             "xy2z\\LiteConfigTests\\": "tests/"
         }
-    }
+    },
+	"scripts": {
+		"test": "vendor/bin/phpunit tests --testdox",
+		"analyze": "vendor/bin/phpstan analyze -c phpstan.neon"
+	},
+	"funding": [
+		{
+			"type": "github",
+			"url": "https://github.com/sponsors/xy2z"
+		}
+	]
 }
