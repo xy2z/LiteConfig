@@ -13,26 +13,26 @@ abstract class LiteConfig {
 	 *
 	 * @var array
 	 */
-	protected static $data = [];
+	protected static array $data = [];
 
 	/**
 	 * Argument used in file_parse_ini()
 	 *
 	 * @var boolean
 	 */
-	public static $ini_process_sections = true;
+	public static bool $ini_process_sections = true;
 
 	/**
 	 * Argument used in file_parse_ini()
 	 *
 	 * @var integer
 	 */
-	public static $ini_scanner_mode = INI_SCANNER_TYPED;
+	public static int $ini_scanner_mode = INI_SCANNER_TYPED;
 
 	/**
 	 * If set to true, it will throw an exception when loading unsupported filetypes.
 	 */
-	public static $ignore_unsupported_filestypes = true;
+	public static bool $ignore_unsupported_filestypes = true;
 
 	/**
 	 * Loads all config files in a directory.
@@ -59,7 +59,7 @@ abstract class LiteConfig {
 	 * @param string $custom_prefix Prefix the key
 	 *
 	 */
-	public static function loadFile(string $path, bool $prefix_filename = false, string $custom_prefix = null) {
+	public static function loadFile(string $path, bool $prefix_filename = false, string $custom_prefix = null): void {
 		$pathinfo = pathinfo($path);
 
 		// Add prefix
@@ -83,14 +83,14 @@ abstract class LiteConfig {
 	 * @param string $path Path to file
 	 * @param array $pathinfo pathinfo() array
 	 *
-	 * @return void|array
+	 * @return null|array
 	 */
-	protected static function getFileContent(string $path, array $pathinfo) {
+	protected static function getFileContent(string $path, array $pathinfo): null|array {
 		switch ($pathinfo['extension']) {
 			case 'php':
 				$php = require $path;
 				if (empty($php) || $php === 1) {
-					return;
+					return null;
 				}
 				if (!is_array($php)) {
 					throw new \Exception('PHP config file must return an array (' . $pathinfo['basename'] . ')');
@@ -107,7 +107,7 @@ abstract class LiteConfig {
 			case 'json':
 				$arr = json_decode(file_get_contents($path), true);
 				if (empty($arr)) {
-					return;
+					return null;
 				}
 				if (!is_array($arr)) {
 					throw new \Exception('JSON config file must return an array (' . $pathinfo['basename'] . ')');
@@ -127,7 +127,7 @@ abstract class LiteConfig {
 				}
 		}
 
-		if (!self::$ignore_unsupported_filestypes) {
+		if (!static::$ignore_unsupported_filestypes) {
 			throw new \Exception('Unsupported filetype: ' . $pathinfo['extension']);
 		}
 		return [];
