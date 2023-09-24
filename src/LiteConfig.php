@@ -30,7 +30,7 @@ abstract class LiteConfig {
 	public static int $ini_scanner_mode = INI_SCANNER_TYPED;
 
 	/**
-	 * If set to true, it will throw an exception when loading unsupported filetypes.
+	 * If set to false, it will throw an exception when loading unsupported filetypes.
 	 */
 	public static bool $ignore_unsupported_filestypes = true;
 
@@ -66,7 +66,7 @@ abstract class LiteConfig {
 		$prefix = ($prefix_filename) ? $pathinfo['filename'] : null;
 
 		if (!is_null($custom_prefix)) {
-			$prefix = $custom_prefix . '.' . $prefix;
+			$prefix = (is_null($prefix)) ? $custom_prefix : $custom_prefix . '.' . $prefix;
 		}
 
 		// Load file content
@@ -130,6 +130,7 @@ abstract class LiteConfig {
 		if (!static::$ignore_unsupported_filestypes) {
 			throw new \Exception('Unsupported filetype: ' . $pathinfo['extension']);
 		}
+
 		return [];
 	}
 
@@ -164,6 +165,7 @@ abstract class LiteConfig {
 		// Save.
 		if (!is_null($prefix)) {
 			static::$data[$prefix][$key] = $value;
+			static::$data[$prefix . '.' . $key] = $value;
 		} else {
 			static::$data[$key] = $value;
 		}
@@ -178,6 +180,11 @@ abstract class LiteConfig {
 	 * @return mixed Value
 	 */
 	public static function get(string $key, $default = null) {
+		if (isset(static::$data[$key])) {
+			// Relevant with double prefixes (file prefix + custom prefix)
+			return static::$data[$key];
+		}
+
 		if (strpos($key, '.') === false) {
 			return static::$data[$key] ?? $default;
 		}
@@ -212,6 +219,11 @@ abstract class LiteConfig {
 	 * @return bool
 	 */
 	public static function exists(string $key): bool {
+		if (isset(static::$data[$key])) {
+			// Relevant with double prefixes (file prefix + custom prefix)
+			return true;
+		}
+
 		if (strpos($key, '.') === false) {
 			return isset(static::$data[$key]);
 		}
