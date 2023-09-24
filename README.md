@@ -111,3 +111,9 @@ If you want to modify the existing handling of all files, you can overwrite the 
 - `loadDir(string $path, bool $prefix_filename = false, string $prefix = null)` Loads all files in dir.
 - `loadFile(string $path, bool $prefix_filename = false, string $custom_prefix = null)` Load a single file.
 - `loadArray(array $array, string $prefix = null)` Loads a php array.
+
+### Public Properties
+- `ini_process_sections` (bool, default `true`) - Argument used in file_parse_ini()
+- `ini_scanner_mode` (int, default `INI_SCANNER_TYPED`) - Argument used in file_parse_ini()
+- `ignore_unsupported_filestypes` (bool, default `true`) - If true, files with unsupported extensions will be ignored. If false, an exception will be thrown.
+
