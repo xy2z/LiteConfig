@@ -193,6 +193,26 @@ class LiteConfigTest extends TestCase {
 		$this->assertEmpty(LiteConfig::all());
 	}
 
+	public function test_has(): void {
+		LiteConfig::loadArray(['settings' => ['v' => '5.3.1', 'f' => true, 'e' => null]]);
+		$this->assertTrue(LiteConfig::has('settings'));
+		$this->assertTrue(LiteConfig::has('settings.v'));
+		$this->assertTrue(LiteConfig::has('settings.f'));
+		$this->assertTrue(LiteConfig::has('settings.e'));
+
+		$this->assertFalse(LiteConfig::has('settings.xy'));
+		$this->assertFalse(LiteConfig::has('2z'));
+
+		LiteConfig::loadArray(['posts' => ['first', 'second']]);
+		$this->assertTrue(LiteConfig::has('posts'));
+		$this->assertTrue(LiteConfig::has('posts.0'));
+		$this->assertTrue(LiteConfig::has('posts.1'));
+
+		$this->assertFalse(LiteConfig::has('posts.2'));
+		$this->assertFalse(LiteConfig::has('posts.xy'));
+		$this->assertFalse(LiteConfig::has('2z'));
+	}
+
 	private function check(string $name, ?string $prefix = null) {
 		$prefix_dot = ''; // default.
 

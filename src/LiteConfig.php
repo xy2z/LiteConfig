@@ -172,6 +172,18 @@ abstract class LiteConfig {
 	}
 
 	/**
+	 * Check if $key is set or not.
+	 * Note: Returns true even if value is set to null.
+	 *
+	 * @param string $key
+	 *
+	 * @return bool
+	 */
+	public static function has(string $key): bool {
+		return array_key_exists($key, static::$data);
+	}
+
+	/**
 	 * Get by key
 	 *
 	 * @param string $key Key
