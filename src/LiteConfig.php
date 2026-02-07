@@ -172,18 +172,6 @@ abstract class LiteConfig {
 	}
 
 	/**
-	 * Check if $key is set or not.
-	 * Note: Returns true even if value is set to null.
-	 *
-	 * @param string $key
-	 *
-	 * @return bool
-	 */
-	public static function has(string $key): bool {
-		return array_key_exists($key, static::$data);
-	}
-
-	/**
 	 * Get by key
 	 *
 	 * @param string $key Key
@@ -225,32 +213,25 @@ abstract class LiteConfig {
 
 	/**
 	 * Check if key exists
+	 * Note: Returns true even if value is set to null.
 	 *
 	 * @param string $key Key name
 	 *
 	 * @return bool
 	 */
 	public static function exists(string $key): bool {
-		if (isset(static::$data[$key])) {
-			// Relevant with double prefixes (file prefix + custom prefix)
-			return true;
-		}
+		return array_key_exists($key, self::$data);
+	}
 
-		if (strpos($key, '.') === false) {
-			return isset(static::$data[$key]);
-		}
-
-		// Key contains dot, so it's a nested key.
-		// Check if the first part exists.
-		$parts = explode('.', $key);
-		$prefix = array_shift($parts);
-		if (!isset(static::$data[$prefix])) {
-			return false;
-		}
-
-		// Check if the rest exists.
-		$rest = implode('.', $parts);
-		return isset(static::$data[$prefix][$rest]);
+	/**
+	 * Alias for exists()
+	 *
+	 * @param string $key
+	 *
+	 * @return bool
+	 */
+	public static function has(string $key): bool {
+		return self::exists($key);
 	}
 
 	/**

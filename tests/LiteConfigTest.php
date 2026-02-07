@@ -179,6 +179,8 @@ class LiteConfigTest extends TestCase {
 		$this->assertNull(LiteConfig::get('conf.numbers.3'));
 
 		$this->assertTrue(LiteConfig::exists('conf'));
+		$this->assertFalse(LiteConfig::exists('settings'));
+		$this->assertFalse(LiteConfig::exists('numbers'));
 		$this->assertTrue(LiteConfig::exists('conf.numbers'));
 		$this->assertTrue(LiteConfig::exists('conf.numbers.0'));
 		$this->assertTrue(LiteConfig::exists('conf.numbers.1'));
