@@ -8,7 +8,7 @@ Built-in support for PHP, INI and JSON files. Also supports YAML and anything el
 
 
 ## Requirements
-- PHP 7.0 +
+- PHP 8.0 +
 
 ## Install
 ```bash

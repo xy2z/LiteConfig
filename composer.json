@@ -14,6 +14,9 @@
             "xy2z\\LiteConfig\\": "src/"
         }
     },
+	"require": {
+		"php": "^8.0"
+	},
     "require-dev": {
         "phpunit/phpunit": "9.*",
         "phpstan/phpstan": "1.*"

@@ -56,10 +56,10 @@ abstract class LiteConfig {
 	 *
 	 * @param string $path Path to file
 	 * @param boolean $prefix_filename Prefix the key with the filename
-	 * @param string $custom_prefix Prefix the key
+	 * @param string|null $custom_prefix Prefix the key
 	 *
 	 */
-	public static function loadFile(string $path, bool $prefix_filename = false, string $custom_prefix = null): void {
+	public static function loadFile(string $path, bool $prefix_filename = false, ?string $custom_prefix = null): void {
 		$pathinfo = pathinfo($path);
 
 		// Add prefix
@@ -138,11 +138,11 @@ abstract class LiteConfig {
 	 * Load an array into the config
 	 *
 	 * @param array $data Data to load.
-	 * @param string $prefix Prefix the keys (optional)
+	 * @param string|null $prefix Prefix the keys (optional)
 	 *
 	 * @return void
 	 */
-	public static function loadArray(array $data, string $prefix = null) {
+	public static function loadArray(array $data, ?string $prefix = null) {
 		foreach ($data as $key => $val) {
 			static::add($key, $val, $prefix);
 		}
@@ -153,8 +153,9 @@ abstract class LiteConfig {
 	 *
 	 * @param string $key Key name
 	 * @param mixed $value Value
+	 * @param string|null $prefix Prefix
 	 */
-	protected static function add(string $key, $value, string $prefix = null): void {
+	protected static function add(string $key, $value, ?string $prefix = null): void {
 		if (is_array($value)) {
 			foreach ($value as $k2 => $v2) {
 				$key_path = $key . '.' . $k2;
